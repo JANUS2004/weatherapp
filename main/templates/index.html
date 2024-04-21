@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Information</title>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #666;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button[type="submit"] {
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            margin: 10px 0;
+            padding: 5px;
+            background-color: #fff;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Information</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="city">Enter City Name:</label>
+        <input type="text" id="city" name="city">
+        <button type="submit">Submit</button>
+    </form>
+    
+    {% if data.country_code %}
+        <p>Country Code: {{ data.country_code }}</p>
+    {% endif %}
+    {% if data.coordinate %}
+        <p>Coordinate: {{ data.coordinate }}</p>
+    {% endif %}
+    {% if data.temp %}
+        <p>Temperature: {{ data.temp }}</p>
+    {% endif %}
+    {% if data.pressure %}
+        <p>Pressure: {{ data.pressure }}</p>
+    {% endif %}
+    {% if data.humidity %}
+        <p>Humidity: {{ data.humidity }}</p>
+    {% endif %}
+
+    <h2>Weather History</h2>
+
+    <ul>
+        {% for weather in bdata %}
+            <li>City: {{ weather.city }}, Temperature: {{ weather.temperature }}, Humidity: {{ weather.humidity }}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
